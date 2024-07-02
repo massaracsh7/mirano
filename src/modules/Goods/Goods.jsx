@@ -12,7 +12,7 @@ export const Goods = () => (
         <ul className="goods__list">
           {goodsArray.map((item) => (
             <li key={item.id} className="goods__item">
-              <Card item={item} />
+              <Card {...item} />
             </li>
           ))}
 
