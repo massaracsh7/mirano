@@ -1,4 +1,5 @@
 import { CartItem } from '../CartItem/CartItem'
+import { goodsArray } from "../../goodsArray";
 import './cart.scss'
 
 export const Cart = () => (
@@ -22,7 +23,9 @@ export const Cart = () => (
       <p className="cart__date-delivery">сегодня в 14:00</p>
 
       <ul className="cart__list">
-        <CartItem />
+        <CartItem {...goodsArray[1]}/>
+        <CartItem {...goodsArray[0]}/>
+        <CartItem {...goodsArray[3]}/>
       </ul>
 
       <div className="cart__footer">
