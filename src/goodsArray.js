@@ -1,4 +1,4 @@
-const goodsArray = [
+export const goodsArray = [
   {
     id: 1,
     img: "https://dull-rose-pawpaw.glitch.me/img/38.jpg",
