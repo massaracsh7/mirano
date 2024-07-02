@@ -31,16 +31,16 @@ export const Order = () => (
           <fieldset className="order__fieldset">
             <div className="order__payment"><label className="order__label-radio"><input
               className="order__radio" type="radio" name="payment-online"
-              value="true" defaultChecked="true" />Оплата онлайн</label></div>
+              defaultValue="true" defaultChecked="true" />Оплата онлайн</label></div>
             <div className="order__delivery"><label htmlFor="delivery">Доставка
               01.07</label><input type="hidden" name="delivery-date"
-                value="01.07" />
+                defaultValue="01.07" />
               <div className="order__select-wrapper"><select className="order__select"
                 name="delivery-time" id="delivery">
-                <option value="9-12">с 9:00 до 12:00</option>
-                <option value="12-15">с 12:00 до 15:00</option>
-                <option value="15-18">с 15:00 до 18:00</option>
-                <option value="18-21">с 18:00 до 21:00</option>
+                <option defaultValue="9-12">с 9:00 до 12:00</option>
+                <option defaultValue="12-15">с 12:00 до 15:00</option>
+                <option defaultValue="15-18">с 15:00 до 18:00</option>
+                <option defaultValue="18-21">с 18:00 до 21:00</option>
               </select></div>
             </div>
           </fieldset>

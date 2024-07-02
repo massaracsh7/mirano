@@ -9,17 +9,17 @@ export const Filter = () => (
       <form className="filter__form">
         <fieldset className="filter__group">
           <input className="filter__radio" type="radio" name="type"
-            value="bouquets" id="flower" defaultChecked />
+            defaultValue="bouquets" id="flower" defaultChecked />
           <label className="filter__label filter__label_flower"
             htmlFor="flower">Цветы</label>
 
-          <input className="filter__radio" type="radio" name="type" value="toys"
+          <input className="filter__radio" type="radio" name="type" defaultValue="toys"
             id="toys" />
           <label className="filter__label filter__label_toys"
             htmlFor="toys">Игрушки</label>
 
           <input className="filter__radio" type="radio" name="type"
-            value="postcards" id="postcard" />
+            defaultValue="postcards" id="postcard" />
           <label className="filter__label filter__label_postcard"
             htmlFor="postcard">Открытки</label>
         </fieldset>
