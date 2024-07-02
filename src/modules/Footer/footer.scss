@@ -1,5 +1,5 @@
-@use "../varibles" as *;
-@use "../media" as *;
+@use "../../scss/varibles" as *;
+@use "../../scss/media" as *;
 
 .footer {
   padding: 80px 0;
@@ -38,14 +38,8 @@
     gap: 12px;
   }
 
-  &__social {
-  }
-
   &__developers-title {
     margin-bottom: 3px;
-  }
-
-  &__developers-list {
   }
 
   &__developers-item {
