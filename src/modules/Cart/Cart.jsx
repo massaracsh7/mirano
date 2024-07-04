@@ -23,9 +23,11 @@ export const Cart = () => (
       <p className="cart__date-delivery">сегодня в 14:00</p>
 
       <ul className="cart__list">
-        <CartItem {...goodsArray[1]}/>
-        <CartItem {...goodsArray[0]}/>
-        <CartItem {...goodsArray[3]}/>
+        {goodsArray.map((item) => (
+          <li key={item.id} className="cart__item">
+            <CartItem {...item} />
+          </li>
+        ))}
       </ul>
 
       <div className="cart__footer">
