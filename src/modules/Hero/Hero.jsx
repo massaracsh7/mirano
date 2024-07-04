@@ -1,15 +1,15 @@
-import './hero.scss'
+import style from './Hero.module.scss';
 
 export const Hero = () => (
-  <section className="hero">
+  <section className={style.hero}>
     <div className="container">
-      <div className="hero__head-group">
-        <h1 className="hero__title">Авторские букеты</h1>
-        <p className="hero__subtitle">и подарки</p>
+      <div className={style.hero__headGroup}>
+        <h1 className={style.hero__title}>Авторские букеты</h1>
+        <p className={style.hero__subtitle}>и подарки</p>
       </div>
 
-      <figure className="hero__group-image">
-        <picture className="hero__image hero__image_left">
+      <figure className={style.hero__groupImage}>
+        <picture className={`${style.hero__image} ${style.hero__image_left}`}>
           <source
             srcSet="/img/hero-left@1x.avif 1x, /img/hero-left@2x.avif 2x"
             type="image/avif" />
@@ -20,7 +20,7 @@ export const Hero = () => (
             alt="Букет цветов в банке. В бкете ярко-ораньжевые розы, ораньжевые тюльпаны и львиный зев. Дополнительно в композию включены белые цветы и зеленые элементы, придающие букету объем и разнообразие" />
         </picture>
 
-        <svg className="hero__image hero__image_center" role="img"
+        <svg className={`${style.hero__image} ${style.hero__image_center}`} role="img"
           aria-label="Букет цветов в вазе, включающий нежные розовые розы, розовые хризантемы и другие цветы пастельных цветов, размещенные в беловй вазе в форме головы."
           width="680" height="588" viewBox="0 0 680 588" fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -31,13 +31,12 @@ export const Hero = () => (
           </clippath>
 
           <foreignobject clipPath="url(#hero)" width="100%" height="100%">
-            <div className="hero__image-center"></div>
+            <div className={style.hero__imageCenter}></div>
           </foreignobject>
 
         </svg>
 
-
-        <picture className="hero__image hero__image_right">
+        <picture className={`${style.hero__image} ${style.hero__image_right}`}>
           <source
             srcSet="/img/hero-right@1x.avif 1x, /img/hero-right@2x.avif 2x"
             type="image/avif" />
@@ -50,4 +49,4 @@ export const Hero = () => (
       </figure>
     </div>
   </section>
-)
+);
