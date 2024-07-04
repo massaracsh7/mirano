@@ -1,9 +1,18 @@
-import './order.scss'
+import './order.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleModal } from '../../redux/modalSlice';
 
 export const Order = () => {
+  const dispatch = useDispatch();
+  const isModalOpen = useSelector((state) => state.modal.isModalOpen);
+
+  if (!isModalOpen) return null;
+
   const isOrder = false;
-  const isOpen = false;
-  if (!isOpen) return null;
+
+  const handlerModalClose = () => {
+    dispatch(toggleModal());
+  }
 
   if (isOrder) {
     return (
@@ -66,7 +75,7 @@ export const Order = () => {
             type="submit" form="order">Заказать</button>
         </div>
       </div>
-      <button className="order__close" type="button">×</button>
+      <button className="order__close" type="button" onClick={handlerModalClose}>×</button>
     </div>
   )
 
