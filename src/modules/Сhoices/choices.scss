@@ -1,0 +1,28 @@
+.choices {
+  position: relative;
+  &__box {
+    display: block;
+
+    &_open {
+      display: block;
+    }
+  }
+}
+
+.filter__choices {
+    position: relative;
+  }
+
+
+.filter__select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: url("/img/arrow.svg") no-repeat center/contain;
+    }
+  }
