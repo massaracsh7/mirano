@@ -1,16 +1,16 @@
-import './subscribe.scss'
+import style from './Subscribe.module.scss';
 
 export const Subscribe = () => (
 
-  <section className="subscribe">
+  <section className={style.subscribe}>
     <div className="container">
-      <h2 className="subscribe__title">Подпишись на&nbsp;рассылку</h2>
+      <h2 className={style.subscribe__title}>Подпишись на&nbsp;рассылку</h2>
 
-      <form className="subscribe__form" action="#">
-        <input className="subscribe__input" type="email" name="email"
+      <form className={style.subscribe__form} action="#">
+        <input className={style.subscribe__input} type="email" name="email"
           placeholder="E-mail" />
 
-        <button className="subscribe__button"
+        <button className={style.subscribe__button}
           aria-label="подписаться на рассылку">
           <svg width="12" height="20" viewBox="0 0 12 20" fill="none"
             xmlns="http://www.w3.org/2000/svg">

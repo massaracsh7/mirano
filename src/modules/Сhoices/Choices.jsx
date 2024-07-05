@@ -1,13 +1,18 @@
-import './choices.scss'
-import './filter.scss'
+import style from './Choices.module.scss';
 
 export const Choices = ({ children, buttonLabel, className }) => {
+  //const [isOpen, setIsOpen] = useState(false);
+
+  //const toggleOpen = () => {
+  //  setIsOpen(!isOpen);
+  //};
+
   return (
-    <div className={`filter__choices choices ${className} `}>
-      <button className="filter__select choices__btn" type="button">
+    <div className={`${style.filter__choices} ${style.choices} ${className}`}>
+      <button className={`${style.filter__select} ${style.choices__btn}`} type="button">
         {buttonLabel}
-    </button>
-      <div className="choices__box filter__choices-box">{ children }</div>
-  </div>  
+      </button>
+        {children}
+    </div>
   );
 };
