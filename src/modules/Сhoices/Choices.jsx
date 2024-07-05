@@ -1,18 +1,13 @@
 import style from './Choices.module.scss';
 
-export const Choices = ({ children, buttonLabel, className }) => {
-  //const [isOpen, setIsOpen] = useState(false);
-
-  //const toggleOpen = () => {
-  //  setIsOpen(!isOpen);
-  //};
+export const Choices = ({ children, buttonLabel, className, isOpen, onToggle }) => {
 
   return (
     <div className={`${style.filter__choices} ${style.choices} ${className}`}>
-      <button className={`${style.filter__select} ${style.choices__btn}`} type="button">
+      <button className={`${style.choices__btn} ${isOpen ? style.openArrow : ''}`} type="button" onClick={onToggle}>
         {buttonLabel}
       </button>
-        {children}
+      {isOpen && children}
     </div>
   );
 };

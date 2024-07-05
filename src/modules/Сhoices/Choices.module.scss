@@ -15,8 +15,15 @@
       width: 8px;
       height: 8px;
       background: url("/img/arrow.svg") no-repeat center/contain;
+      transition: transform 0.3s ease;
     }
+
+    &.openArrow:after {
+      transform: rotate(180deg);
+    }
+
   }
+
 
   &__box {
     display: none;
