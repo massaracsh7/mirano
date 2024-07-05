@@ -14,9 +14,15 @@ export const Order = () => {
     dispatch(toggleModal());
   };
 
+  const handlerBackClick = (event) => {
+    if (event.target === event.currentTarget) {
+      handlerModalClose();
+    }
+  }
+
   if (isOrder) {
     return (
-      <div className={styles.order}>
+      <div className={styles.order} onClick={handlerBackClick}>
         <div className={styles.order__wrapper}>
           <h2 className={styles.order__title}>Заказ оформлен!</h2>
           <p className={styles.order__id}>Ваш номер заказа: 971f365a-caa1-4cdb-9446-bad2eff047e1</p>
@@ -26,7 +32,7 @@ export const Order = () => {
   }
 
   return (
-    <div className={styles.order}>
+    <div className={styles.order} onClick={handlerBackClick}>
       <div className={styles.order__wrapper}>
         <h2 className={styles.order__title}>Оформить заказ</h2>
         <form className={styles.order__form} id="order">
