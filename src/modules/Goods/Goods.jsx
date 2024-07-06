@@ -12,13 +12,15 @@ export const Goods = () => {
     items: goods,
     status: goodsStatus,
     error,
+    category,
   } = useSelector((state) => state.goods);
+
 
   useEffect(() => {
     if (goodsStatus === 'idle') {
-      dispatch(fetchGoods());
+      dispatch(fetchGoods(`type=${category}`));
     }
-  }, [dispatch, goodsStatus]);
+  }, [dispatch, category, goodsStatus]);
 
   let content = null;
 

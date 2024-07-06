@@ -13,12 +13,18 @@ const initialState = {
   items: [],
   status: "idle",
   error: null,
+  category: 'bouquets',
 };
 
 const goodsSlice = createSlice({
   name: 'goods',
   initialState,
-  reducers: {},
+  reducers: {
+    changeCat(state, action) {
+      state.category = action.payload;
+      state.status = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchGoods.pending, (state) => {
@@ -35,6 +41,6 @@ const goodsSlice = createSlice({
   },
 });
 
-export const { toggleModal } = goodsSlice.actions;
+export const { changeCat } = goodsSlice.actions;
 
 export default goodsSlice.reducer;

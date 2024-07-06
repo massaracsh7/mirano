@@ -1,6 +1,9 @@
+import { useDispatch } from 'react-redux';
 import { Choices } from '../Сhoices/Choices';
 import style from './Filter.module.scss';
 import { useState } from 'react';
+import { changeCat } from '../../redux/goodsSlice';
+
 
 export const Filter = () => {
   const [openFilter, setOpenFilter] = useState(null);
@@ -8,19 +11,27 @@ export const Filter = () => {
   const handlerFilter = (filter) => {
     setOpenFilter(openFilter === filter ? null : filter);
   };
+
+  const dispatch = useDispatch();
+
+  const handlerCategory = (event) => {
+    const type = event.target.value;
+    dispatch(changeCat(type));
+  };
+  
   return (
     <section className={style.filter}>
       <h2 className="visually-hidden"></h2>
       <div className="container">
         <form className={style.filter__form}>
           <fieldset className={style.filter__group}>
-            <input className={style.filter__radio} type="radio" name="type" defaultValue="bouquets" id="flower" defaultChecked />
+            <input className={style.filter__radio} type="radio" name="type" defaultValue="bouquets" id="flower" defaultChecked onChange={handlerCategory} />
             <label className={`${style.filter__label} ${style.filter__label_flower}`} htmlFor="flower">Цветы</label>
 
-            <input className={style.filter__radio} type="radio" name="type" defaultValue="toys" id="toys" />
+            <input className={style.filter__radio} type="radio" name="type" defaultValue="toys" id="toys" onChange={handlerCategory} />
             <label className={`${style.filter__label} ${style.filter__label_toys}`} htmlFor="toys">Игрушки</label>
 
-            <input className={style.filter__radio} type="radio" name="type" defaultValue="postcards" id="postcard" />
+            <input className={style.filter__radio} type="radio" name="type" defaultValue="postcards" id="postcard" onChange={handlerCategory} />
             <label className={`${style.filter__label} ${style.filter__label_postcard}`} htmlFor="postcard">Открытки</label>
           </fieldset>
           <fieldset className={`${style.filter__group} ${style.filter__group_choices}`}>
