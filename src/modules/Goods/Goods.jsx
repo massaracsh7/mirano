@@ -1,24 +1,64 @@
-import { goodsArray } from "../../goodsArray";
+import { useDispatch, useSelector } from "react-redux";
 import { Card } from "../Card/Card";
 import { Cart } from "../Cart/Cart";
 import style from './Goods.module.scss';
+import { useEffect } from "react";
+import { fetchGoods } from "../../redux/goodsSlice";
+import { API_URL } from "../../const";
 
-export const Goods = () => (
-  <section className={style.goods}>
-    <div className={`container ${style.goods__container}`}>
-      <div className={style.goods__box}>
-        <h2 className={style.goods__title}>Цветы</h2>
+export const Goods = () => {
+  const dispatch = useDispatch();
+  const {
+    items: goods,
+    status: goodsStatus,
+    error,
+  } = useSelector((state) => state.goods);
 
-        <ul className={style.goods__list}>
-          {goodsArray.map((item) => (
-            <li key={item.id} className={style.goods__item}>
-              <Card {...item} />
-            </li>
-          ))}
-        </ul>
+  useEffect(() => {
+    if (goodsStatus === 'idle') {
+      dispatch(fetchGoods());
+    }
+  }, [dispatch, goodsStatus]);
+
+  let content = null;
+
+  if (goodsStatus === 'loading') {
+    content = <p>Loading...</p>
+  }
+
+  if (goodsStatus === 'success') {
+    content = (
+      <ul className={style.goods__list}>
+        {goods.map((item) => (
+          <li key={item.id} className={style.goods__item}>
+            <Card
+              className="goods__card"
+              id={item.id}
+              img={`${API_URL}${item.photoUrl}`}
+              title={item.name}
+              dateDelivery="14.00"
+              price={item.price}
+            />
+          </li>
+        ))}
+      </ul>)
+  }
+
+  if (goodsStatus === 'error') {
+    content = <p>{error}</p>
+  }
+
+
+  return (
+    <section className={style.goods}>
+      <div className={`container ${style.goods__container}`}>
+        <div className={style.goods__box}>
+          <h2 className={style.goods__title}>Цветы</h2>
+          {content}
+        </div>
+
+        <Cart />
       </div>
-
-      <Cart />
-    </div>
-  </section>
-);
+    </section>
+  );
+};
