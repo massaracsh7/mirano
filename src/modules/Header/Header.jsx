@@ -1,21 +1,32 @@
+import { useEffect, useState } from 'react';
 import { toggleCart } from '../../redux/cartSlice';
+import { changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Header.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const Header = () => {
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
   const handlerCartToggle = () => {
     dispatch(toggleCart());
   }
 
   const { items } = useSelector((state) => state.cart);
-  
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(changeSearch(search))
+    dispatch(changeType(''))
+  }, [dispatch, search]);
 
   return (
     <header className={style.header}>
       <div className={`container ${style.header__container}`}>
         <form className={style.header__form} action="#">
-          <input className={style.header__input} type="search" name="search" placeholder="Букет из роз" />
+          <input className={style.header__input} type="search" name="search" placeholder="Букет из роз" onChange={handleSearchChange} />
           <button className={style.header__searchButton} aria-label="начать поиск">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

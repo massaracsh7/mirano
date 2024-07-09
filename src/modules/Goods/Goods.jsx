@@ -14,18 +14,22 @@ export const Goods = () => {
     error,
     type,
     priceRange: { minPrice, maxPrice },
+    search,
   } = useSelector((state) => state.goods);
 
 
   useEffect(() => {
     if (goodsStatus === 'idle') {
       const queryParams = {};
-      if (type) queryParams.type = type;
-      if (minPrice) queryParams.minPrice = parseInt(minPrice);
-      if (maxPrice) queryParams.maxPrice = parseInt(maxPrice);
+      if (search) { queryParams.search = search;}
+      else {
+        if (type) queryParams.type = type;
+        if (minPrice) queryParams.minPrice = parseInt(minPrice);
+        if (maxPrice) queryParams.maxPrice = parseInt(maxPrice);
+      }
       dispatch(fetchGoods(queryParams));
     }
-  }, [dispatch, type, goodsStatus, minPrice, maxPrice]);
+  }, [dispatch, type, goodsStatus, minPrice, maxPrice, search]);
 
   let content = null;
 
@@ -55,12 +59,25 @@ export const Goods = () => {
     content = <p>{error}</p>
   }
 
+  const getTitle = () => {
+    switch (type) {
+      case 'bouquets':
+        return 'Цветы';
+      case 'toys':
+        return 'Игрушки';
+      case 'postcards':
+        return 'Открытки';
+      default:
+        return 'Товары';
+    }
+  };
+
 
   return (
     <section className={style.goods}>
       <div className={`container ${style.goods__container}`}>
         <div className={style.goods__box}>
-          <h2 className={style.goods__title}>Цветы</h2>
+          <h2 className={style.goods__title}>{getTitle()}</h2>
           {content}
         </div>
 

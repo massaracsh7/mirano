@@ -17,7 +17,8 @@ const initialState = {
   priceRange: {
     minPrice: '',
     maxPrice: '',
-  }
+  },
+  search: '',
 };
 
 const goodsSlice = createSlice({
@@ -31,7 +32,12 @@ const goodsSlice = createSlice({
     changePriceRange(state, action) {
       state.priceRange = action.payload;
       state.status = 'idle';
+    },
+    changeSearch(state, action) {
+      state.search = action.payload;
+      state.status = 'idle';
     }
+
   },
   extraReducers: (builder) => {
     builder
@@ -49,6 +55,6 @@ const goodsSlice = createSlice({
   },
 });
 
-export const { changeType, changePriceRange } = goodsSlice.actions;
+export const { changeType, changePriceRange, changeSearch } = goodsSlice.actions;
 
 export default goodsSlice.reducer;
