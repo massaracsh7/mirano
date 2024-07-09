@@ -3,6 +3,7 @@ import { API_URL } from "../const";
 
 export const fetchGoods = createAsyncThunk("goods/fetchGoods", async (params) => {
   const queryString = new URLSearchParams(params).toString();
+  console.log(queryString);
   const response = await fetch(
     `${API_URL}/api/products${queryString ? `?${queryString}` : ""}`,
   );

@@ -3,30 +3,52 @@ import { toggleCart } from '../../redux/cartSlice';
 import { changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Header.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { debounce } from '../../utils';
 
 export const Header = () => {
+  const { items } = useSelector((state) => state.cart);
+  const { type } = useSelector((state) => state.goods);
   const [search, setSearch] = useState('');
+
   const dispatch = useDispatch();
   const handlerCartToggle = () => {
     dispatch(toggleCart());
-  }
-
-  const { items } = useSelector((state) => state.cart);
+  };
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+    debouncedSearch(event.target.value);
+  };
+
+  const debouncedSearch = debounce((value) => {
+    if (value.trim() !== '') {
+      dispatch(changeSearch(value));
+      dispatch(changeType(''));
+    } else {
+      dispatch(changeSearch(''));
+    }
+  }, 500); 
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
   };
 
   useEffect(() => {
-    dispatch(changeSearch(search))
-    dispatch(changeType(''))
-  }, [dispatch, search]);
+    setSearch('');
+  }, [type]);
 
   return (
     <header className={style.header}>
       <div className={`container ${style.header__container}`}>
-        <form className={style.header__form} action="#">
-          <input className={style.header__input} type="search" name="search" placeholder="Букет из роз" onChange={handleSearchChange} />
+        <form className={style.header__form} action="#" onSubmit={handleSearchSubmit}>
+          <input
+            className={style.header__input}
+            type="search"
+            name="search"
+            placeholder="Букет из роз"
+            value={search}
+            onChange={handleSearchChange}
+          />
           <button className={style.header__searchButton} aria-label="начать поиск">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -42,4 +64,4 @@ export const Header = () => {
       </div>
     </header>
   );
-}
+};

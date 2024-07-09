@@ -1,14 +1,7 @@
-export const debounce = (fn, msec) => {
-  let lastCall = 0;
-  let lastCallTimer = 0;
-
-  return (...arg) => {
-    const prevCall = lastCall;
-    lastCall = Date.now();
-    if (prevCall && lastCall - prevCall <= msec) {
-      clearTimeout(lastCallTimer);
-    }
-
-    lastCallTimer = setTimeout(() => fn(...arg), msec);
-  }
-}
+export const debounce = (fn, delay) => {
+  let timeoutId;
+  return (...args) => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
+};
