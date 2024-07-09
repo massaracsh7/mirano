@@ -12,15 +12,20 @@ export const Goods = () => {
     items: goods,
     status: goodsStatus,
     error,
-    category,
+    type,
+    priceRange: { minPrice, maxPrice },
   } = useSelector((state) => state.goods);
 
 
   useEffect(() => {
     if (goodsStatus === 'idle') {
-      dispatch(fetchGoods(`type=${category}`));
+      const queryParams = {};
+      if (type) queryParams.type = type;
+      if (minPrice) queryParams.minPrice = parseInt(minPrice);
+      if (maxPrice) queryParams.maxPrice = parseInt(maxPrice);
+      dispatch(fetchGoods(queryParams));
     }
-  }, [dispatch, category, goodsStatus]);
+  }, [dispatch, type, goodsStatus, minPrice, maxPrice]);
 
   let content = null;
 

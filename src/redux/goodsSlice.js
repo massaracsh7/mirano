@@ -13,17 +13,25 @@ const initialState = {
   items: [],
   status: "idle",
   error: null,
-  category: 'bouquets',
+  type: 'bouquets',
+  priceRange: {
+    minPrice: '',
+    maxPrice: '',
+  }
 };
 
 const goodsSlice = createSlice({
   name: 'goods',
   initialState,
   reducers: {
-    changeCat(state, action) {
-      state.category = action.payload;
+    changeType(state, action) {
+      state.type = action.payload;
       state.status = 'idle';
     },
+    changePriceRange(state, action) {
+      state.priceRange = action.payload;
+      state.status = 'idle';
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -41,6 +49,6 @@ const goodsSlice = createSlice({
   },
 });
 
-export const { changeCat } = goodsSlice.actions;
+export const { changeType, changePriceRange } = goodsSlice.actions;
 
 export default goodsSlice.reducer;
