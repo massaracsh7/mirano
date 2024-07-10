@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { changePriceRange, changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Filter.module.scss';
 import { debounce } from '../../utils';
-import { Choices } from '../Сhoices/Choices';
+import { Choices } from '../Choices/Choices';
 
 export const Filter = () => {
   const [minPrice, setMinPrice] = useState('');
@@ -26,10 +26,11 @@ export const Filter = () => {
     setOpenFilter(null);
   };
 
-  const debouncedChangePriceRange = debounce((updatedPriceRange) => {
-    dispatch(changePriceRange(updatedPriceRange));
-  }, 500);
-
+  const debouncedChangePriceRange = useRef(
+    debounce((updatedPriceRange) => {
+      dispatch(changePriceRange(updatedPriceRange));
+    }, 500)
+  ).current;
 
   const handleMinPriceChange = (event) => {
     const newMinPrice = event.target.value;
@@ -43,14 +44,9 @@ export const Filter = () => {
     debouncedChangePriceRange({ minPrice, maxPrice: newMaxPrice });
   };
 
-  useEffect(() => {
-    const updatedPriceRange = { minPrice, maxPrice };
-    dispatch(changePriceRange(updatedPriceRange));
-  }, [minPrice, maxPrice, dispatch]);
-
   return (
     <section className={style.filter}>
-      <h2 className="visually-hidden"></h2>
+      <h2 className="visually-hidden">Фильтр</h2>
       <div className="container">
         <form className={style.filter__form}>
           <fieldset className={style.filter__group}>
@@ -58,35 +54,42 @@ export const Filter = () => {
               className={style.filter__radio}
               type="radio"
               name="type"
-              defaultValue="bouquets"
+              value="bouquets"
               id="flower"
               defaultChecked
               onChange={handlerType}
             />
-            <label className={`${style.filter__label} ${style.filter__label_flower}`} htmlFor="flower">Цветы</label>
+            <label className={`${style.filter__label} ${style.filter__label_flower}`} htmlFor="flower">
+              Цветы
+            </label>
 
             <input
               className={style.filter__radio}
               type="radio"
               name="type"
-              defaultValue="toys"
+              value="toys"
               id="toys"
               onChange={handlerType}
             />
-            <label className={`${style.filter__label} ${style.filter__label_toys}`} htmlFor="toys">Игрушки</label>
+            <label className={`${style.filter__label} ${style.filter__label_toys}`} htmlFor="toys">
+              Игрушки
+            </label>
 
             <input
               className={style.filter__radio}
               type="radio"
               name="type"
-              defaultValue="postcards"
+              value="postcards"
               id="postcard"
               onChange={handlerType}
             />
-            <label className={`${style.filter__label} ${style.filter__label_postcard}`} htmlFor="postcard">Открытки</label>
+            <label className={`${style.filter__label} ${style.filter__label_postcard}`} htmlFor="postcard">
+              Открытки
+            </label>
           </fieldset>
+
           <fieldset className={`${style.filter__group} ${style.filter__group_choices}`}>
-            <Choices 
+            <Choices
               buttonLabel="Цена"
               isOpen={openFilter === 'price'}
               onToggle={() => handlerFilter('price')}
@@ -122,19 +125,29 @@ export const Filter = () => {
               <div className={`${style.choices__box} ${style.filter__choices_box}`}>
                 <ul className={style.filter__type_list}>
                   <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">Монобукеты</button>
+                    <button className={style.filter__type_button} type="button">
+                      Монобукеты
+                    </button>
                   </li>
                   <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">Авторские букеты</button>
+                    <button className={style.filter__type_button} type="button">
+                      Авторские букеты
+                    </button>
                   </li>
                   <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">Цветы в коробке</button>
+                    <button className={style.filter__type_button} type="button">
+                      Цветы в коробке
+                    </button>
                   </li>
                   <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">Цветы в корзине</button>
+                    <button className={style.filter__type_button} type="button">
+                      Цветы в корзине
+                    </button>
                   </li>
                   <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">Букеты из сухоцветов</button>
+                    <button className={style.filter__type_button} type="button">
+                      Букеты из сухоцветов
+                    </button>
                   </li>
                 </ul>
               </div>

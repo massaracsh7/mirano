@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toggleCart } from '../../redux/cartSlice';
 import { changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Header.module.scss';
@@ -20,14 +20,15 @@ export const Header = () => {
     debouncedSearch(event.target.value);
   };
 
-  const debouncedSearch = debounce((value) => {
+  const debouncedSearch = useRef(debounce((value) => {
     if (value.trim() !== '') {
       dispatch(changeSearch(value));
       dispatch(changeType(''));
     } else {
       dispatch(changeSearch(''));
     }
-  }, 500); 
+  }, 500)
+  ).current; 
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
