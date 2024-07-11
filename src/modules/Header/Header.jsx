@@ -4,9 +4,9 @@ import { changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Header.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const Header = () => {
-  const { items } = useSelector((state) => state.cart);
-  const { type } = useSelector((state) => state.goods);
+export const Header = ({ goodsRef }) => {
+  const { items: cartItems } = useSelector((state) => state.cart);
+  const { type, items: goodsItems } = useSelector((state) => state.goods);
   const [search, setSearch] = useState('');
 
   const dispatch = useDispatch();
@@ -26,17 +26,21 @@ export const Header = () => {
     } else {
       dispatch(changeSearch(''));
     }
-  }; 
+  };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
   };
 
   useEffect(() => {
-    if (type) {
-      setSearch('');
+    if (!type && goodsRef.current) {
+      goodsRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [type]);
+  }, [goodsItems, goodsRef, type]);
+
+  useEffect(() => {
+    setSearch('');
+  }, [type, goodsItems]);
 
   return (
     <header className={style.header}>
@@ -61,7 +65,7 @@ export const Header = () => {
 
         <img className={style.header__logo} src="/img/logo.svg" alt="Логотип Mirano Flower Boutique" />
 
-        <button className={style.header__cartButton} onClick={handlerCartToggle}>{items.length}</button>
+        <button className={style.header__cartButton} onClick={handlerCartToggle}>{cartItems.length}</button>
       </div>
     </header>
   );

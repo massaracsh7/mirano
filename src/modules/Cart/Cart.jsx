@@ -1,7 +1,7 @@
 import { CartItem } from '../CartItem/CartItem'
 import './cart.scss'
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleCart } from '../../redux/cartSlice';
+import { selectTotalPrice, toggleCart } from '../../redux/cartSlice';
 import { toggleModal } from '../../redux/modalSlice';
 import { useEffect, useRef } from 'react';
 
@@ -9,6 +9,7 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.cart.isOpen);
   const items = useSelector((state) => state.cart.items);
+  const totalPrice = useSelector(selectTotalPrice);
   const cartRef = useRef(null);
 
   const handlerCartClose = () => {
@@ -56,7 +57,7 @@ export const Cart = () => {
 
         <div className="cart__footer">
           <button className="cart__order-btn" onClick={handlerModalOpen}>Оформить</button>
-          <p className="cart__price cart__price_total">0&nbsp;₽</p>
+          <p className="cart__price cart__price_total">{totalPrice}&nbsp;₽</p>
         </div>
       </div>
     </section>

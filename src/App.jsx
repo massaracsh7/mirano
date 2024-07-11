@@ -6,7 +6,7 @@ import { Header } from './modules/Header/Header';
 import { Hero } from './modules/Hero/Hero';
 import { Order } from './modules/Order/Order';
 import { Subscribe } from './modules/Subscribe/Subscribe';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { registerCart } from './redux/cartSlice';
 
 export function App() {
@@ -18,15 +18,19 @@ export function App() {
     };
     initialCart();
   })
+  const goodsRef = useRef(null);
 
   return (
     <>
 
-      <Header />
+      <Header goodsRef={goodsRef} />
       <main>
         <Hero />
         <Filter />
-        <Goods />
+        
+        <div ref={goodsRef}>
+          <Goods />
+        </div>
         <Subscribe />
       </main>
 
