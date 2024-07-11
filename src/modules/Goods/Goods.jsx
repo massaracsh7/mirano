@@ -38,7 +38,7 @@ export const Goods = () => {
   }
 
   if (goodsStatus === 'success') {
-    content = (
+    content = goods.length === 0 ? 'По вашему запросу ничего не найдено' : (
       <ul className={style.goods__list}>
         {goods.map((item) => (
           <li key={item.id} className={style.goods__item}>
@@ -68,7 +68,7 @@ export const Goods = () => {
       case 'postcards':
         return 'Открытки';
       default:
-        return 'Товары';
+        return `Товары ${search}`;
     }
   };
 
