@@ -1,11 +1,19 @@
-import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { changePriceRange, changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Filter.module.scss';
 import { debounce } from '../../utils';
 import { Choices } from '../Choices/Choices';
+import { FilterRadio } from './FilterRadio';
+
+const filterTypes = [
+  { value: 'bouquets', title: 'Цветы' },
+  { value: 'toys', title: 'Игрушки' },
+  { value: 'postcards', title: 'Открытки' },
+]
 
 export const Filter = () => {
+  const { type } = useSelector((state) => state.goods);
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [openFilter, setOpenFilter] = useState(null);
@@ -44,48 +52,21 @@ export const Filter = () => {
     debouncedChangePriceRange({ minPrice, maxPrice: newMaxPrice });
   };
 
+  useEffect(() => {
+    if (!type) {
+      setOpenFilter(null);
+    }
+  }, [type])
+
   return (
     <section className={style.filter}>
       <h2 className="visually-hidden">Фильтр</h2>
       <div className="container">
         <form className={style.filter__form}>
           <fieldset className={style.filter__group}>
-            <input
-              className={style.filter__radio}
-              type="radio"
-              name="type"
-              value="bouquets"
-              id="flower"
-              defaultChecked
-              onChange={handlerType}
-            />
-            <label className={`${style.filter__label} ${style.filter__label_flower}`} htmlFor="flower">
-              Цветы
-            </label>
-
-            <input
-              className={style.filter__radio}
-              type="radio"
-              name="type"
-              value="toys"
-              id="toys"
-              onChange={handlerType}
-            />
-            <label className={`${style.filter__label} ${style.filter__label_toys}`} htmlFor="toys">
-              Игрушки
-            </label>
-
-            <input
-              className={style.filter__radio}
-              type="radio"
-              name="type"
-              value="postcards"
-              id="postcard"
-              onChange={handlerType}
-            />
-            <label className={`${style.filter__label} ${style.filter__label_postcard}`} htmlFor="postcard">
-              Открытки
-            </label>
+            {filterTypes.map((item) => (
+              <FilterRadio key={item.value} handlerType={handlerType} data={item} type={type}/>
+            ))}
           </fieldset>
 
           <fieldset className={`${style.filter__group} ${style.filter__group_choices}`}>
