@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toggleCart } from '../../redux/cartSlice';
 import { changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Header.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { debounce } from '../../utils';
 
 export const Header = ({ goodsRef }) => {
   const { items: cartItems } = useSelector((state) => state.cart);
@@ -16,17 +17,19 @@ export const Header = ({ goodsRef }) => {
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
-    valueSearch(event.target.value);
+    debouncedSearch(event.target.value);
   };
 
-  const valueSearch = (value) => {
-    if (value.trim() !== '') {
-      dispatch(changeSearch(value));
-      dispatch(changeType(''));
-    } else {
-      dispatch(changeSearch(''));
-    }
-  };
+  const debouncedSearch = useRef(
+    debounce((value) => {
+      if (value.trim() !== '') {
+        dispatch(changeSearch(value));
+        dispatch(changeType(''));
+      } else {
+        dispatch(changeSearch(''));
+      }
+}, 500)
+  ).current;
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
