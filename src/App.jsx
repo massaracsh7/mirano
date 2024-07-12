@@ -7,17 +7,19 @@ import { Hero } from './modules/Hero/Hero';
 import { Order } from './modules/Order/Order';
 import { Subscribe } from './modules/Subscribe/Subscribe';
 import { useEffect, useRef } from 'react';
-import { registerCart } from './redux/cartSlice';
+import { registerCart, fetchCart } from './redux/cartSlice';
 
 export function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
     const initialCart = async () => {
-      await dispatch(registerCart);
+      await dispatch(registerCart());
+      await dispatch(fetchCart());
     };
     initialCart();
-  })
+  }, [dispatch]);
+  
   const goodsRef = useRef(null);
 
   return (

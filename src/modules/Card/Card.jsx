@@ -5,9 +5,8 @@ import { useState } from 'react';
 
 export const Card = ({ id, img, title, dateDelivery, price }) => {
   const dispatch = useDispatch();
-
   const handlerAddToCart = () => {
-    dispatch(addItemToCart({ id, img, title, dateDelivery, price }))
+    dispatch(addItemToCart({ productId: id, quantity: 1 }))
   }
 
   const [isHover, setIsHover] = useState(false);

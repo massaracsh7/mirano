@@ -1,11 +1,12 @@
-import './cart.scss'
+import './cart.scss';
+import { API_URL } from "../../const";
 
-export const CartItem = ({ img, title, price }) => (
+export const CartItem = ({ photoUrl, name, price }) => (
   <>
     <img className="cart__img"
-      src={img}
-      alt={title} />
-    <h4 className="cart__item-title">{title}</h4>
+      src={`${API_URL}${photoUrl}`}
+      alt={name} />
+    <h4 className="cart__item-title">{name}</h4>
     <div className="cart__counter">
       <button className="cart__counter-btn">-</button>
       <input className="cart__counter-input" type="number" max="99" min="0"
