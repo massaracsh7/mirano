@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import {
   toggleModal,
-  dateOrderData,
+  updateOrderData,
   submitOrder
 } from '../../redux/modalSlice';
 import styles from './Order.module.scss';
@@ -24,9 +24,9 @@ export const Order = () => {
     }
   };
 
-  const handlerChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(dateOrderData({ field: name, value }));
+  const handlerChange = ({ target }) => {
+    const { name, value } = target;
+    dispatch(updateOrderData({ [name]: value }));
   };
 
   const handleSubmit = (event) => {
@@ -60,6 +60,7 @@ export const Order = () => {
                 value={formData.buyerName}
                 onChange={handlerChange}
                 placeholder="Имя"
+                required
               />
               <input
                 className={styles.order__input}
@@ -68,6 +69,7 @@ export const Order = () => {
                 value={formData.buyerPhone}
                 onChange={handlerChange}
                 placeholder="Телефон"
+                required
               />
             </div>
           </fieldset>
@@ -81,6 +83,7 @@ export const Order = () => {
                 value={formData.recipientName}
                 onChange={handlerChange}
                 placeholder="Имя"
+                required
               />
               <input
                 className={styles.order__input}
@@ -89,6 +92,7 @@ export const Order = () => {
                 value={formData.recipientPhone}
                 onChange={handlerChange}
                 placeholder="Телефон"
+                required
               />
             </div>
           </fieldset>
@@ -102,6 +106,7 @@ export const Order = () => {
                 value={formData.street}
                 onChange={handlerChange}
                 placeholder="Улица"
+                required
               />
               <input
                 className={`${styles.order__input} ${styles.order__input_min}`}
@@ -110,6 +115,7 @@ export const Order = () => {
                 value={formData.house}
                 onChange={handlerChange}
                 placeholder="Дом"
+                required
               />
               <input
                 className={`${styles.order__input} ${styles.order__input_min}`}
@@ -118,6 +124,7 @@ export const Order = () => {
                 value={formData.apartment}
                 onChange={handlerChange}
                 placeholder="Квартира"
+                required
               />
             </div>
           </fieldset>

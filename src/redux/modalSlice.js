@@ -42,6 +42,7 @@ export const submitOrder = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(orderData),
     });
 
@@ -54,12 +55,12 @@ export const submitOrder = createAsyncThunk(
     dispatch(clearOrder());
     dispatch(toggleCart());
     dispatch(fetchCart());
-
     return result;
   }
 );
 
 const initialState = {
+  status: 'idle',
   isModalOpen: false,
   orderId: '',
   data: {
@@ -70,7 +71,7 @@ const initialState = {
     street: '',
     house: '',
     apartment: '',
-    paymentMethod: true,
+    paymentMethod: 'true',
     deliveryDate: '',
     deliveryTime: '',
   }
@@ -96,7 +97,7 @@ const modalSlice = createSlice({
         street: '',
         house: '',
         apartment: '',
-        paymentMethod: true,
+        paymentMethod: 'true',
         deliveryDate: '',
         deliveryTime: '',
       };

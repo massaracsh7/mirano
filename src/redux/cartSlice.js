@@ -62,8 +62,7 @@ const cartSlice = createSlice({
       })
       .addCase(registerCart.rejected, (state, action) => {
         state.status = "failed";
-        state.accessKey = '';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
       .addCase(fetchCart.pending, (state) => {
         state.status = "loading";
@@ -74,8 +73,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = "failed";
-        state.accessKey = '';
-        state.error = action.error.message;
+state.error = action.payload || action.error.message;
       })
       .addCase(addItemToCart.pending, (state) => {
         state.status = "loading";
@@ -86,8 +84,7 @@ const cartSlice = createSlice({
       })
       .addCase(addItemToCart.rejected, (state, action) => {
         state.status = "failed";
-        state.accessKey = '';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
   }
 });
