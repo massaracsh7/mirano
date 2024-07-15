@@ -15,6 +15,7 @@ export const Goods = () => {
     type,
     priceRange: { minPrice, maxPrice },
     search,
+    category,
   } = useSelector((state) => state.goods);
 
 
@@ -26,10 +27,11 @@ export const Goods = () => {
         if (type) queryParams.type = type;
         if (minPrice) queryParams.minPrice = parseInt(minPrice);
         if (maxPrice) queryParams.maxPrice = parseInt(maxPrice);
+        if (category) queryParams.category = category;
       }
       dispatch(fetchGoods(queryParams));
     }
-  }, [dispatch, type, goodsStatus, minPrice, maxPrice, search]);
+  }, [dispatch, type, goodsStatus, minPrice, maxPrice, search, category]);
 
   let content = null;
 

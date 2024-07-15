@@ -56,7 +56,7 @@ export const Cart = () => {
         </ul>
 
         <div className="cart__footer">
-          <button className="cart__order-btn" onClick={handlerModalOpen}>Оформить</button>
+          <button className="cart__order-btn" onClick={handlerModalOpen} disabled={!items.length}>Оформить</button>
           <p className="cart__price cart__price_total">{totalPrice}&nbsp;₽</p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePriceRange, changeSearch, changeType } from '../../redux/goodsSlice';
+import { changePriceRange, changeSearch, changeType, changeCategory } from '../../redux/goodsSlice';
 import style from './Filter.module.scss';
 import { debounce } from '../../utils';
 import { Choices } from '../Choices/Choices';
@@ -13,11 +13,10 @@ const filterTypes = [
 ]
 
 export const Filter = () => {
-  const { type } = useSelector((state) => state.goods);
+  const { type, categories } = useSelector((state) => state.goods);
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [openFilter, setOpenFilter] = useState(null);
-
   const dispatch = useDispatch();
 
   const handlerFilter = (filter) => {
@@ -58,6 +57,11 @@ export const Filter = () => {
     }
   }, [type])
 
+  const handlerCategoryChange = (category) => {
+    dispatch(changeCategory(category));
+    setOpenFilter(null);
+  }
+
   return (
     <section className={style.filter}>
       <h2 className="visually-hidden">Фильтр</h2>
@@ -65,7 +69,7 @@ export const Filter = () => {
         <form className={style.filter__form}>
           <fieldset className={style.filter__group}>
             {filterTypes.map((item) => (
-              <FilterRadio key={item.value} handlerType={handlerType} data={item} type={type}/>
+              <FilterRadio key={item.value} handlerType={handlerType} data={item} type={type} />
             ))}
           </fieldset>
 
@@ -97,7 +101,7 @@ export const Filter = () => {
               </div>
             </Choices>
 
-            <Choices
+            {categories.length ? <Choices
               buttonLabel="Тип товара"
               className={style.filter__choices_type}
               isOpen={openFilter === 'type'}
@@ -106,33 +110,20 @@ export const Filter = () => {
               <div className={`${style.choices__box} ${style.filter__choices_box}`}>
                 <ul className={style.filter__type_list}>
                   <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">
-                      Монобукеты
+                    <button className={style.filter__type_button} type="button" onClick={() => handlerCategoryChange('')}>
+                      Все категории
                     </button>
                   </li>
-                  <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">
-                      Авторские букеты
-                    </button>
-                  </li>
-                  <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">
-                      Цветы в коробке
-                    </button>
-                  </li>
-                  <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">
-                      Цветы в корзине
-                    </button>
-                  </li>
-                  <li className={style.filter__type_item}>
-                    <button className={style.filter__type_button} type="button">
-                      Букеты из сухоцветов
-                    </button>
-                  </li>
+                  {categories.map((category) => (
+                    <li key={category} className={style.filter__type_item}>
+                      <button className={style.filter__type_button} type="button" onClick={()=> handlerCategoryChange(category)}>
+                        {category}
+                      </button>
+                    </li>)
+                  )}
                 </ul>
               </div>
-            </Choices>
+            </Choices> : null}
           </fieldset>
         </form>
       </div>

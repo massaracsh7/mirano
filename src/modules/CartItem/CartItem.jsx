@@ -20,14 +20,12 @@ export const CartItem = ({ id, photoUrl, name, price, quantity }) => {
   }
 
   const handlerDecrement = () => {
-    console.log('-');
     const newQuantity = inputQuantity - 1;
     setInputQuantity(newQuantity);
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   }
 
   const handlerIncrement = () => {
-    console.log('+');
     const newQuantity = inputQuantity + 1;
     setInputQuantity(newQuantity);
     dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
@@ -41,9 +39,9 @@ export const CartItem = ({ id, photoUrl, name, price, quantity }) => {
       <div className="cart__counter">
         <button className="cart__counter-btn" onClick={handlerDecrement}>-</button>
         <input className="cart__counter-input" type="number" max="99" min="0"
-          value={quantity} onChange={handlerInputChange} />
+          value={inputQuantity} onChange={handlerInputChange} />
         <button className="cart__counter-btn" onClick={handlerIncrement}>+</button></div>
-      <p className="cart__price">{price * quantity}&nbsp;₽</p>
+      <p className="cart__price">{price * inputQuantity}&nbsp;₽</p>
 
     </>
   )
