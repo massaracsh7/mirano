@@ -5,12 +5,15 @@ import {
   submitOrder
 } from '../../redux/modalSlice';
 import styles from './Order.module.scss';
+import { selectTotalPrice } from '../../redux/cartSlice';
+
 
 export const Order = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
   const orderId = useSelector((state) => state.modal.orderId);
   const formData = useSelector((state) => state.modal.data);
+  const totalPrice = useSelector(selectTotalPrice);
 
   if (!isModalOpen) return null;
 
@@ -33,6 +36,7 @@ export const Order = () => {
     event.preventDefault();
     dispatch(submitOrder());
   };
+
 
   if (orderId) {
     return (
@@ -163,7 +167,7 @@ export const Order = () => {
           </fieldset>
         </form>
         <div className={styles.order__footer}>
-          <p className={styles.order__total}>92100&nbsp;₽</p>
+          <p className={styles.order__total}>{totalPrice}&nbsp;₽</p>
           <button className={styles.order__button} type="submit" form="order">Заказать</button>
         </div>
       </div>

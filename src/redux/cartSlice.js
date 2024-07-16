@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../const";
 
 export const registerCart = createAsyncThunk('cart/registerCart', async () => {
-  const response = fetch(`${API_URL}/api/cart/register`, {
+  const response = await fetch(`${API_URL}/api/cart/register`, {
     method: 'POST',
     credentials: 'include'
   });
@@ -13,8 +13,8 @@ export const registerCart = createAsyncThunk('cart/registerCart', async () => {
 });
 
 export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
-  const response = fetch(`${API_URL}/api/cart`, {
-    credentials: 'include'
+  const response = await fetch(`${API_URL}/api/cart`, {
+    credentials: "include",
   });
   if (!response.ok) {
     throw new Error('Error fetch cart')
@@ -55,6 +55,7 @@ const cartSlice = createSlice({
     builder
       .addCase(registerCart.pending, (state) => {
         state.status = "loading";
+        state.accessKey = null;
       })
       .addCase(registerCart.fulfilled, (state, action) => {
         state.status = "success";
@@ -62,10 +63,12 @@ const cartSlice = createSlice({
       })
       .addCase(registerCart.rejected, (state, action) => {
         state.status = "failed";
+        state.accessKey = null;
         state.error = action.payload || action.error.message;
       })
       .addCase(fetchCart.pending, (state) => {
         state.status = "loading";
+        state.accessKey = null;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.status = "success";
@@ -73,7 +76,8 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = "failed";
-state.error = action.payload || action.error.message;
+        state.error = action.payload || action.error.message;
+        state.accessKey = null;
       })
       .addCase(addItemToCart.pending, (state) => {
         state.status = "loading";

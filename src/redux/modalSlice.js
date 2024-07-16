@@ -83,6 +83,9 @@ const modalSlice = createSlice({
   reducers: {
     toggleModal(state) {
       state.isModalOpen = !state.isModalOpen;
+      if (!state.isModalOpen) {
+        state.orderId = '';
+      }
     },
     updateOrderData(state, action) {
       state.data = { ...state.data, ...action.payload };
@@ -111,6 +114,7 @@ const modalSlice = createSlice({
     builder
       .addCase(submitOrder.pending, (state) => {
         state.status = 'loading';
+        state.orderId = '';
       })
       .addCase(submitOrder.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -119,6 +123,7 @@ const modalSlice = createSlice({
       .addCase(submitOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        state.orderId = '';
       });
   },
 });
