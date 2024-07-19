@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { API_URL } from "../../const";
 import { Preload } from "../Preload/Preload";
+import { calculateDeliveryTime } from "../../utils";
 
 
 export const Goods = () => {
@@ -34,19 +35,6 @@ export const Goods = () => {
       dispatch(fetchGoods(queryParams));
     }
   }, [dispatch, type, goodsStatus, minPrice, maxPrice, search, category]);
-
-  const calculateDeliveryTime = () => {
-    const now = new Date();
-    const currentHour = now.getHours();
-    const deliveryHour = currentHour < 18 ? currentHour + 3 : 9;
-    const deliveryTime = `${deliveryHour}:00`;
-    if (currentHour >= 18) {
-      return `Завтра ${deliveryTime}`;
-    } else {
-      return `Сегодня ${deliveryTime}`;
-    }
-  };
-
 
   let content = null;
 

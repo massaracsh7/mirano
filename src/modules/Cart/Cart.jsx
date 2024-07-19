@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectTotalPrice, toggleCart } from '../../redux/cartSlice';
 import { toggleModal } from '../../redux/modalSlice';
 import { useEffect, useRef } from 'react';
+import { calculateDeliveryTime } from '../../utils';
 
 export const Cart = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ export const Cart = () => {
           </button>
         </div>
 
-        <p className="cart__date-delivery">сегодня в 14:00</p>
+        <p className="cart__date-delivery">{calculateDeliveryTime()}</p>
 
         <ul className="cart__list">
           {items.map((item) => (
