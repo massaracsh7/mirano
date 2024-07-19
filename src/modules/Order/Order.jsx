@@ -6,6 +6,7 @@ import {
 } from '../../redux/modalSlice';
 import styles from './Order.module.scss';
 import { selectTotalPrice } from '../../redux/cartSlice';
+import { useState } from 'react';
 
 
 export const Order = () => {
@@ -14,6 +15,8 @@ export const Order = () => {
   const orderId = useSelector((state) => state.modal.orderId);
   const formData = useSelector((state) => state.modal.data);
   const totalPrice = useSelector(selectTotalPrice);
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   if (!isModalOpen) return null;
 
@@ -34,6 +37,8 @@ export const Order = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const formattedDate = selectedDate.toISOString().split('T')[0];
+    dispatch(updateOrderData({ deliveryDate: formattedDate }));
     dispatch(submitOrder());
   };
 
@@ -149,6 +154,15 @@ export const Order = () => {
             <div className={styles.order__delivery}>
               <label htmlFor="delivery">Доставка {formData.deliveryDate}</label>
               <input type="hidden" name="delivery-date" value={formData.deliveryDate} />
+              <div className={styles.order__date_picker}>
+                <input
+                  type="date"
+                  value={selectedDate.toISOString().substr(0, 10)}
+                  onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                  min={new Date().toISOString().substr(0, 10)}
+                  className={styles.order__date_input}
+                />
+              </div>
               <div className={styles.order__select_wrapper}>
                 <select
                   className={styles.order__select}
