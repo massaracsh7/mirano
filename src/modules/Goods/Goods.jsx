@@ -5,6 +5,8 @@ import style from './Goods.module.scss';
 import { useEffect } from "react";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { API_URL } from "../../const";
+import { Preload } from "../Preload/Preload";
+
 
 export const Goods = () => {
   const dispatch = useDispatch();
@@ -33,10 +35,23 @@ export const Goods = () => {
     }
   }, [dispatch, type, goodsStatus, minPrice, maxPrice, search, category]);
 
+  const calculateDeliveryTime = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const deliveryHour = currentHour < 18 ? currentHour + 3 : 9;
+    const deliveryTime = `${deliveryHour}:00`;
+    if (currentHour >= 18) {
+      return `Завтра ${deliveryTime}`;
+    } else {
+      return `Сегодня ${deliveryTime}`;
+    }
+  };
+
+
   let content = null;
 
   if (goodsStatus === 'loading') {
-    content = <p>Loading...</p>
+    content = <Preload />;
   }
 
   if (goodsStatus === 'success') {
@@ -49,7 +64,7 @@ export const Goods = () => {
               id={item.id}
               img={`${API_URL}${item.photoUrl}`}
               title={item.name}
-              dateDelivery="14.00"
+              dateDelivery={calculateDeliveryTime()}
               price={item.price}
             />
           </li>
@@ -73,7 +88,6 @@ export const Goods = () => {
         return `Товары ${search}`;
     }
   };
-
 
   return (
     <section className={style.goods}>
