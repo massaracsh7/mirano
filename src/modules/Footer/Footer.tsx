@@ -1,6 +1,7 @@
+import React from 'react';
 import style from "./Footer.module.scss";
 
-export const Footer = () => (
+export const Footer: React.FC = () => (
   <footer className={style.footer}>
     <div className={`container ${style.footer__container}`}>
       <img className={style.footer__logo} src="img/logo.svg" alt="Логотип Mirano Flower Boutique" />

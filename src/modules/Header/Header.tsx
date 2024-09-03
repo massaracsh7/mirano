@@ -4,34 +4,40 @@ import { changeSearch, changeType } from '../../redux/goodsSlice';
 import style from './Header.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce } from '../../utils';
+import { RootState } from '../../redux/store';
 
-export const Header = ({ goodsRef }) => {
-  const { items: cartItems } = useSelector((state) => state.cart);
-  const { type, items: goodsItems } = useSelector((state) => state.goods);
-  const [search, setSearch] = useState('');
+interface HeaderProps {
+  goodsRef: React.RefObject<HTMLDivElement>;
+}
+
+export const Header: React.FC<HeaderProps> = ({ goodsRef }) => {
+  const { items: cartItems } = useSelector((state: RootState) => state.cart);
+  const { type, items: goodsItems } = useSelector((state: RootState) => state.goods);
+  const [search, setSearch] = useState < string > ('');
 
   const dispatch = useDispatch();
+
   const handlerCartToggle = () => {
     dispatch(toggleCart());
   };
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
     debouncedSearch(event.target.value);
   };
 
   const debouncedSearch = useRef(
-    debounce((value) => {
+    debounce((value: string) => {
       if (value.trim() !== '') {
         dispatch(changeSearch(value));
         dispatch(changeType(''));
       } else {
         dispatch(changeSearch(''));
       }
-}, 500)
+    }, 500)
   ).current;
 
-  const handleSearchSubmit = (event) => {
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
@@ -48,7 +54,7 @@ export const Header = ({ goodsRef }) => {
   return (
     <header className={style.header}>
       <div className={`container ${style.header__container}`}>
-        <form className={style.header__form} action="#" onSubmit={handleSearchSubmit}>
+        <form className={style.header__form} onSubmit={handleSearchSubmit}>
           <input
             className={style.header__input}
             type="search"
