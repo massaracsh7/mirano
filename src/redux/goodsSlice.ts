@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { API_URL } from "../const";
-
-// Интерфейсы для данных
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  categories: string[];
-}
+import { Product } from "../types";
 
 interface PriceRange {
   minPrice: string;
@@ -25,7 +18,7 @@ interface GoodsState {
   category: string;
 }
 
-// Начальное состояние
+// Initial state
 const initialState: GoodsState = {
   items: [],
   status: 'idle',
@@ -40,8 +33,7 @@ const initialState: GoodsState = {
   category: '',
 };
 
-// Асинхронное действие для получения товаров
-export const fetchGoods = createAsyncThunk < Product[], Record<string, string>> (
+export const fetchGoods = createAsyncThunk<Product[], Record<string, string>>(
   'goods/fetchGoods',
   async (params) => {
     const queryString = new URLSearchParams(params).toString();
@@ -55,7 +47,7 @@ export const fetchGoods = createAsyncThunk < Product[], Record<string, string>> 
   }
 );
 
-// Слайс состояния товаров
+// Goods slice
 const goodsSlice = createSlice({
   name: 'goods',
   initialState,
@@ -81,30 +73,29 @@ const goodsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchGoods.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
         state.categories = [];
       })
       .addCase(fetchGoods.fulfilled, (state, action: PayloadAction<Product[]>) => {
-        state.status = "success";
+        state.status = 'success';
         state.items = action.payload;
+
+        // Update categories
+        const newCategories = new Set<string>();
         action.payload.forEach(product => {
           if (product.categories) {
-            product.categories.forEach((category) => {
-              if (!state.categories.includes(category)) {
-                state.categories.push(category);
-              }
-            });
+            product.categories.forEach(category => newCategories.add(category));
           }
         });
+        state.categories = Array.from(newCategories);
       })
       .addCase(fetchGoods.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.error.message || null;
       });
   },
 });
 
-// Экспорт действий и редьюсера
 export const { changeType, changePriceRange, changeSearch, changeCategory } = goodsSlice.actions;
 
 export type { GoodsState };

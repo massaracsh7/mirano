@@ -23,6 +23,14 @@ export interface Postcard {
   photoUrl: string;
 }
 
+export interface Product {
+  id: number;
+  name: string;
+  categories?: string[];
+  price: number;
+  photoUrl: string;
+}
+
 // Общий интерфейс для базы данных
 export interface Database {
   bouquets: Bouquet[];
