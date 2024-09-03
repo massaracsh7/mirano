@@ -1,26 +1,44 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toggleCart, fetchCart } from "./cartSlice";
 import { API_URL } from "../const";
 
+interface OrderData {
+  buyerName: string;
+  buyerPhone: string;
+  recipientName: string;
+  recipientPhone: string;
+  street: string;
+  house: string;
+  apartment: string;
+  paymentMethod: string;
+  deliveryDate: string;
+  deliveryTime: string;
+}
+
+interface ModalState {
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  isModalOpen: boolean;
+  orderId: string;
+  data: OrderData;
+  error?: string;
+}
+
 export const submitOrder = createAsyncThunk(
-  "order/sendOrder",
+  'order/sendOrder',
   async (_, { getState, dispatch }) => {
+    const state = getState() as { modal: { data: OrderData } };
     const {
-      modal: {
-        data: {
-          buyerName,
-          buyerPhone,
-          recipientName,
-          recipientPhone,
-          street,
-          house,
-          apartment,
-          paymentMethod,
-          deliveryDate,
-          deliveryTime,
-        },
-      },
-    } = getState();
+      buyerName,
+      buyerPhone,
+      recipientName,
+      recipientPhone,
+      street,
+      house,
+      apartment,
+      paymentMethod,
+      deliveryDate,
+      deliveryTime,
+    } = state.modal.data;
 
     const orderData = {
       buyer: {
@@ -59,7 +77,7 @@ export const submitOrder = createAsyncThunk(
   }
 );
 
-const initialState = {
+const initialState: ModalState = {
   status: 'idle',
   isModalOpen: false,
   orderId: '',
@@ -77,6 +95,7 @@ const initialState = {
   }
 };
 
+// Слайс для модального окна
 const modalSlice = createSlice({
   name: 'modal',
   initialState,
@@ -87,7 +106,7 @@ const modalSlice = createSlice({
         state.orderId = '';
       }
     },
-    updateOrderData(state, action) {
+    updateOrderData(state, action: PayloadAction<Partial<OrderData>>) {
       state.data = { ...state.data, ...action.payload };
     },
     clearOrder(state) {
@@ -105,7 +124,7 @@ const modalSlice = createSlice({
         deliveryTime: '',
       };
     },
-    updateOrder(state, action) {
+    updateOrder(state, action: PayloadAction<{ orderId?: string; data: Partial<OrderData> }>) {
       state.orderId = action.payload.orderId || state.orderId;
       state.data = { ...state.data, ...action.payload.data };
     },
@@ -116,13 +135,13 @@ const modalSlice = createSlice({
         state.status = 'loading';
         state.orderId = '';
       })
-      .addCase(submitOrder.fulfilled, (state, action) => {
+      .addCase(submitOrder.fulfilled, (state, action: PayloadAction<{ orderId: string }>) => {
         state.status = 'succeeded';
         state.orderId = action.payload.orderId;
       })
       .addCase(submitOrder.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.error.message || '';
         state.orderId = '';
       });
   },
@@ -134,5 +153,7 @@ export const {
   clearOrder,
   updateOrder
 } = modalSlice.actions;
+
+export type { ModalState };
 
 export default modalSlice.reducer;
