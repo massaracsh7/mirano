@@ -1,6 +1,15 @@
 import style from './Filter.module.scss';
 
-export const FilterRadio = ({ data, handlerType, type }) => {
+interface FilterRadioProps {
+  data: {
+    value: string;
+    title: string;
+  };
+  handlerType: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+}
+
+export const FilterRadio: React.FC<FilterRadioProps> = ({ data, handlerType, type }) => {
   return (
     <>
       <input
@@ -20,4 +29,4 @@ export const FilterRadio = ({ data, handlerType, type }) => {
       </label>
     </>
   );
-}
+};

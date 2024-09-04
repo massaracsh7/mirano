@@ -1,22 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  toggleModal,
-  updateOrderData,
-  submitOrder
-} from '../../redux/modalSlice';
+import { toggleModal, updateOrderData, submitOrder } from '../../redux/modalSlice';
 import styles from './Order.module.scss';
 import { selectTotalPrice } from '../../redux/cartSlice';
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { AppDispatch, RootState } from '../../redux/store';
 
-
-export const Order = () => {
-  const dispatch = useDispatch();
-  const isModalOpen = useSelector((state) => state.modal.isModalOpen);
-  const orderId = useSelector((state) => state.modal.orderId);
-  const formData = useSelector((state) => state.modal.data);
+export const Order: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
+  const orderId = useSelector((state: RootState) => state.modal.orderId);
+  const formData = useSelector((state: RootState) => state.modal.data);
   const totalPrice = useSelector(selectTotalPrice);
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState < Date > (new Date());
 
   if (!isModalOpen) return null;
 
@@ -24,24 +20,23 @@ export const Order = () => {
     dispatch(toggleModal());
   };
 
-  const handlerBackClick = (event) => {
+  const handlerBackClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       handlerModalClose();
     }
   };
 
-  const handlerChange = ({ target }) => {
+  const handlerChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = target;
     dispatch(updateOrderData({ [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formattedDate = selectedDate.toISOString().split('T')[0];
     dispatch(updateOrderData({ deliveryDate: formattedDate }));
     dispatch(submitOrder());
   };
-
 
   if (orderId) {
     return (
@@ -182,10 +177,14 @@ export const Order = () => {
         </form>
         <div className={styles.order__footer}>
           <p className={styles.order__total}>{totalPrice}&nbsp;₽</p>
-          <button className={styles.order__button} type="submit" form="order">Заказать</button>
+          <button className={styles.order__button} type="submit" form="order">
+            Заказать
+          </button>
         </div>
       </div>
-      <button className={styles.order__close} type="button" onClick={handlerModalClose}>×</button>
+      <button className={styles.order__close} type="button" onClick={handlerModalClose}>
+        ×
+      </button>
     </div>
   );
 };

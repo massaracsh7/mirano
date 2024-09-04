@@ -5,6 +5,8 @@ interface CartItem {
   productId: number;
   quantity: number;
   price: number;
+  photoUrl: string;
+  name: string;
 }
 
 interface CartResponse {
@@ -33,7 +35,7 @@ const initialState: CartState = {
   error: null,
 };
 
-export const registerCart = createAsyncThunk < CartResponse > (
+export const registerCart = createAsyncThunk<CartResponse>(
   'cart/registerCart',
   async () => {
     const response = await fetch(`${API_URL}/api/cart/register`, {
@@ -47,7 +49,7 @@ export const registerCart = createAsyncThunk < CartResponse > (
   }
 );
 
-export const fetchCart = createAsyncThunk < CartItem[] > (
+export const fetchCart = createAsyncThunk<CartItem[]>(
   'cart/fetchCart',
   async () => {
     const response = await fetch(`${API_URL}/api/cart`, {
@@ -60,7 +62,7 @@ export const fetchCart = createAsyncThunk < CartItem[] > (
   }
 );
 
-export const addItemToCart = createAsyncThunk < CartItem[], AddItemPayload> (
+export const addItemToCart = createAsyncThunk<CartItem[], AddItemPayload>(
   "cart/addItemToCart",
   async ({ productId, quantity }) => {
     const response = await fetch(`${API_URL}/api/cart/items`, {
@@ -131,5 +133,5 @@ export const { toggleCart } = cartSlice.actions;
 export const selectTotalPrice = (state: { cart: CartState }) =>
   state.cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
-export type { CartState }; 
+export type { CartState };
 export default cartSlice.reducer;

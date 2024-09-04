@@ -1,37 +1,28 @@
-// Интерфейс для букетов
-export interface Bouquet {
-  id: number;
-  name: string;
-  categories: string[];
-  price: number;
-  photoUrl: string;
-}
-
-// Интерфейс для игрушек
-export interface Toy {
-  id: number;
-  name: string;
-  price: number;
-  photoUrl: string;
-}
-
-// Интерфейс для открыток
-export interface Postcard {
-  id: number;
-  name: string;
-  price: number;
-  photoUrl: string;
-}
-
 export interface Product {
   id: number;
   name: string;
-  categories?: string[];
   price: number;
   photoUrl: string;
+  categories?: string[];
 }
 
-// Общий интерфейс для базы данных
+export interface Bouquet extends Product {
+  categories: string[];
+}
+
+export interface Toy extends Product {
+}
+
+export interface Postcard extends Product {
+}
+
+export interface CartItemState {
+  items: Product[];
+  productId: number;
+  quantity: number;
+  price: number;
+}
+
 export interface Database {
   bouquets: Bouquet[];
   toys: Toy[];
