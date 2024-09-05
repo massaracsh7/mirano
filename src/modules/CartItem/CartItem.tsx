@@ -47,18 +47,18 @@ export const CartItem: React.FC<CartItemProps> = ({ id, photoUrl, name, price, q
         src={`${API_URL}${photoUrl}`}
         alt={name}
       />
-      <h4 className={styles.cart__item_title}>{name}</h4>
+      <h4 className={styles.cart__itemtitle}>{name}</h4>
       <div className={styles.cart__counter}>
-        <button className={styles.cart__counter_btn} onClick={handlerDecrement}>-</button>
+        <button className={styles.cart__counterbtn} onClick={handlerDecrement}>-</button>
         <input
-          className={styles.cart__counter_input}
+          className={styles.cart__counterinput}
           type="number"
           max="99"
           min="0"
           value={inputQuantity}
           onChange={handlerInputChange}
         />
-        <button className={styles.cart__counter_btn} onClick={handlerIncrement}>+</button>
+        <button className={styles.cart__counterbtn} onClick={handlerIncrement}>+</button>
       </div>
       <p className={styles.cart__price}>{price * inputQuantity}&nbsp;₽</p>
     </>

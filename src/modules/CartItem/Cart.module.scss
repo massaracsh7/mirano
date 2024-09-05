@@ -2,23 +2,19 @@
 @use "@scss/media" as *;
 
 .cart {
-  align-self: start;
-  padding-top: 100px;
+  display: block;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 5%;
   display: none;
 
   &_open {
     display: block;
   }
 
-  @media (max-width: 1360px) {
-    padding: 0;
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    height: 100vh;
+  @media (max-width: 1320px) {
+    right: 2%;
   }
 
   @include mobile {
@@ -32,6 +28,8 @@
     max-width: 100%;
     width: 310px;
     background-color: $white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4),
+      0 3px 6px rgba(0, 0, 0, 0.8);
     min-height: 778px;
     display: flex;
     flex-direction: column;
@@ -101,7 +99,7 @@
     object-fit: cover;
   }
 
-  &__item-title {
+  &__itemtitle {
     grid-area: title;
     font-weight: 400;
     font-size: 14px;
@@ -113,15 +111,22 @@
     gap: 4px;
   }
 
-  &__counter-btn {
+  &__counterbtn {
     border-radius: 6px;
-    width: 29px;
-    height: 29px;
-    background: $bg;
-    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light-orange;
+    @extend %btn-placeholder;
   }
 
-  &__counter-input {
+  &__counterinput {
     font-size: 14px;
     width: 22px;
     padding: 0;
@@ -151,11 +156,12 @@
     justify-content: space-between;
   }
 
-  &__order-btn {
+  &__orderbtn {
     border-radius: 32px;
     padding: 9px 16px 8px 16px;
     background: $light-orange;
     color: $white;
+    @extend %btn-placeholder;
 
     &:disabled {
       background-color: $light-orange;

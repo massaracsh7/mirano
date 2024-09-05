@@ -21,19 +21,19 @@ export function App() {
     };
     initialCart();
   }, [dispatch]);
-  
+
   const goodsRef = useRef(null);
   const cartRef = useRef(null);
 
   return (
     <>
 
-      <Header goodsRef={goodsRef} cartRef={cartRef}/>
+      <Header goodsRef={goodsRef} cartRef={cartRef} />
       <main className='main'>
         <Hero />
         <Filter />
-        <div ref={cartRef}><Cart /></div>
-        <div ref={goodsRef}>
+        <div className='wrapper' ref={goodsRef}>
+          <div ref={cartRef}><Cart /></div>
           <Goods />
         </div>
 
