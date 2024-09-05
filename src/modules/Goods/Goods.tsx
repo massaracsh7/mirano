@@ -5,12 +5,12 @@ import style from './Goods.module.scss';
 import { useEffect } from "react";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { API_URL } from "../../const";
-import { Preload } from "../Preload/Preload";
 import { calculateDeliveryTime } from "../../utils";
 import { Product } from "../../types";
+import { SkeletonLoader } from "../SkeletonLoader/SkeletonLoader";
 
 export const Goods: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();;
+  const dispatch = useDispatch<AppDispatch>();
   const {
     items: goods,
     status: goodsStatus,
@@ -24,8 +24,9 @@ export const Goods: React.FC = () => {
   useEffect(() => {
     if (goodsStatus === 'idle') {
       const queryParams: Record<string, string> = {};
-      if (search) { queryParams.search = search; }
-      else {
+      if (search) {
+        queryParams.search = search;
+      } else {
         if (type) queryParams.type = type;
         if (minPrice) queryParams.minPrice = minPrice;
         if (maxPrice) queryParams.maxPrice = maxPrice;
@@ -38,26 +39,32 @@ export const Goods: React.FC = () => {
   let content = null;
 
   if (goodsStatus === 'loading') {
-    content = <Preload />;
+    content = (
+      <ul className={style.goods__list}>
+        <SkeletonLoader count={6} />
+      </ul>
+    );
   }
 
   if (goodsStatus === 'success') {
-    content = goods.length === 0 ? 'По вашему запросу ничего не найдено' : (
-      <ul className={style.goods__list}>
-        {goods.map((item: Product) => (
-          <li key={item.id} className={style.goods__item}>
-            <Card
-              className={style.goods__card}
-              id={item.id}
-              img={`${API_URL}${item.photoUrl}`}
-              title={item.name}
-              dateDelivery={calculateDeliveryTime()}
-              price={item.price}
-            />
-          </li>
-        ))}
-      </ul>
-    );
+    content = goods.length === 0
+      ? 'По вашему запросу ничего не найдено'
+      : (
+        <ul className={style.goods__list}>
+          {goods.map((item: Product) => (
+            <li key={item.id} className={style.goods__item}>
+              <Card
+                className={style.goods__card}
+                id={item.id}
+                img={`${API_URL}${item.photoUrl}`}
+                title={item.name}
+                dateDelivery={calculateDeliveryTime()}
+                price={item.price}
+              />
+            </li>
+          ))}
+        </ul>
+      );
   }
 
   if (goodsStatus === 'failed') {

@@ -4,26 +4,17 @@
 .cart {
   display: block;
   position: absolute;
-  top: 18%;
-  right: 0;
-
-  /* Закругление углов для лучшего визуального эффекта */
-
+  z-index: 10;
+  top: 10%;
+  right: 10%;
   display: none;
 
   &_open {
     display: block;
   }
 
-  @media (max-width: 1360px) {
-    padding: 0;
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    height: 100vh;
+  @media (max-width: 1320px) {
+    right: 2%;
   }
 
   @include mobile {
@@ -164,7 +155,7 @@
     background: $light-orange;
     color: $white;
     @extend %btn-placeholder;
-    
+
     &:disabled {
       background-color: $light-orange;
       opacity: 0.4;
