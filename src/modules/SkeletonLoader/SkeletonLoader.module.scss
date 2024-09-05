@@ -1,0 +1,11 @@
+@use "@scss/varibles" as *;
+@use "@scss/media" as *;
+
+.skeletonwrapper {
+  width: 100%;
+  height: 531px;
+
+  @include mobile {
+    height: 380px;
+  }
+}
