@@ -13,5 +13,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
       "@scss": path.resolve(__dirname, "src/scss"),
     }
-  }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://mirano-api-gjxb.onrender.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

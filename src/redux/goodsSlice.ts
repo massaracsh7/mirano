@@ -38,8 +38,12 @@ export const fetchGoods = createAsyncThunk<Product[], Record<string, string>>(
   async (params) => {
     const queryString = new URLSearchParams(params).toString();
     const response = await fetch(
-      `${API_URL}/api/products${queryString ? `?${queryString}` : ""}`,
+      `${API_URL}/api/products${queryString ? `?${queryString}` : ""}`, {
+      credentials: 'include',
+      mode: 'cors',
+    }
     );
+    console.log(response);
     if (!response.ok) {
       throw new Error('Failed to fetch goods');
     }
