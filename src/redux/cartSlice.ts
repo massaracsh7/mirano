@@ -41,7 +41,6 @@ export const registerCart = createAsyncThunk<CartResponse>(
     const response = await fetch(`${API_URL}/api/cart/register`, {
       method: 'POST',
       credentials: 'include',
-      mode: 'cors',
     });
     if (!response.ok) {
       throw new Error('Error registering cart');
@@ -55,7 +54,6 @@ export const fetchCart = createAsyncThunk<CartItem[]>(
   async () => {
     const response = await fetch(`${API_URL}/api/cart`, {
       credentials: "include",
-      mode: 'cors',
     });
     if (!response.ok) {
       throw new Error('Error fetching cart');
