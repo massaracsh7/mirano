@@ -1,4 +1,4 @@
-import styles from './cart.module.scss';
+import styles from './Cart.module.scss';
 import { API_URL } from "../../const";
 import { useDispatch } from 'react-redux';
 import { useState, ChangeEvent } from 'react';
@@ -7,19 +7,19 @@ import { debounce } from '../../utils';
 import { AppDispatch } from '../../redux/store';
 
 interface CartItemProps {
-  productId: number;
+  id: string;
   photoUrl: string;
   name: string;
   price: number;
   quantity: number;
 }
 
-export const CartItem: React.FC<CartItemProps> = ({ productId, photoUrl, name, price, quantity }) => {
+export const CartItem: React.FC<CartItemProps> = ({ id, photoUrl, name, price, quantity }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [inputQuantity, setInputQuantity] = useState<number>(quantity);
 
   const debounceInputChange = debounce((newQuantity: number) => {
-    dispatch(addItemToCart({ productId: productId, quantity: newQuantity }));
+    dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   }, 500);
 
   const handlerInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,13 +31,13 @@ export const CartItem: React.FC<CartItemProps> = ({ productId, photoUrl, name, p
   const handlerDecrement = () => {
     const newQuantity = inputQuantity - 1;
     setInputQuantity(newQuantity);
-    dispatch(addItemToCart({ productId: productId, quantity: newQuantity }));
+    dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   };
 
   const handlerIncrement = () => {
     const newQuantity = inputQuantity + 1;
     setInputQuantity(newQuantity);
-    dispatch(addItemToCart({ productId: productId, quantity: newQuantity }));
+    dispatch(addItemToCart({ productId: id, quantity: newQuantity }));
   };
 
   return (

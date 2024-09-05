@@ -6,7 +6,7 @@ import { AppDispatch } from '../../redux/store'; // Import AppDispatch type
 
 interface CardProps {
   className?: string; 
-  id: number;
+  id: string;
   img: string;
   title: string;
   dateDelivery: string;

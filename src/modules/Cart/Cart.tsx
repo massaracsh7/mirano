@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styles from './cart.module.scss';
+import styles from './Cart.module.scss';
 import { selectTotalPrice, toggleCart } from '../../redux/cartSlice';
 import { toggleModal } from '../../redux/modalSlice';
 import { calculateDeliveryTime } from '../../utils';
@@ -9,11 +9,10 @@ import { CartItem } from '../CartItem/CartItem';
 
 export const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const isOpen = useSelector((state: RootState) => state.cart.isOpen); // Use appropriate type for state
-  const items = useSelector((state: RootState) => state.cart.items); // Use appropriate type for state
+  const isOpen = useSelector((state: RootState) => state.cart.isOpen); 
+  const items = useSelector((state: RootState) => state.cart.items); 
   const totalPrice = useSelector(selectTotalPrice);
-  const cartRef = useRef < HTMLDivElement > (null);
-
+  const cartRef = useRef<HTMLDivElement>(null);
   const handlerCartClose = () => {
     dispatch(toggleCart());
   };
@@ -31,7 +30,7 @@ export const Cart: React.FC = () => {
   if (!isOpen) return null;
 
   return (
-    <section className={`${styles.cart} ${isOpen ? styles.cart_open : ''}`} ref={cartRef}>
+    <section className={`${styles.cart} ${styles.cart_open}`} ref={cartRef}>
       <div className={styles.cart__container}>
         <div className={styles.cart__header}>
           <h3 className={styles.cart__title}>Ваш заказ</h3>
@@ -68,7 +67,7 @@ export const Cart: React.FC = () => {
 
         <ul className={styles.cart__list}>
           {items.map((item) => ( 
-            <li key={item.productId} className={styles.cart__item}>
+            <li key={item.id} className={styles.cart__item}>
               <CartItem {...item} />
             </li>
           ))}
@@ -76,7 +75,7 @@ export const Cart: React.FC = () => {
 
         <div className={styles.cart__footer}>
           <button
-            className={styles.cart__orderBtn}
+            className={styles.cart__orderbtn}
             onClick={handlerModalOpen}
             disabled={!items.length}
           >

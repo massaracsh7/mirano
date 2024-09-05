@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { Card } from "../Card/Card";
-import { Cart } from "../Cart/Cart";
 import style from './Goods.module.scss';
 import { useEffect } from "react";
 import { fetchGoods } from "../../redux/goodsSlice";
@@ -85,7 +84,6 @@ export const Goods: React.FC = () => {
           <h2 className={style.goods__title}>{getTitle()}</h2>
           {content}
         </div>
-        <Cart />
       </div>
     </section>
   );

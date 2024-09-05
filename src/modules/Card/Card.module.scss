@@ -73,7 +73,8 @@
     padding: 8px 16px;
     min-width: 120px;
     color: $white;
-    background: $light-orange;
+    background-color: $light-orange;
+    @extend %btn-placeholder;
   }
 
   &__button-text {

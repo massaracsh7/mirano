@@ -61,5 +61,6 @@
     justify-content: center;
     border-radius: 32px;
     background-color: $light-orange;
+    @extend %btn-placeholder;
   }
 }

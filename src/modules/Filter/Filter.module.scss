@@ -45,6 +45,7 @@
     min-height: 72px;
     display: flex;
     align-items: center;
+    @extend %btn-placeholder;
 
     @include mobile {
       padding: 10px 12px 10px 40px;
@@ -65,9 +66,6 @@
       background-image: url("/img/postcard.png");
     }
 
-    &:hover {
-      background-color: $orange;
-    }
   }
 
   &__radio:focus-visible+&__label {

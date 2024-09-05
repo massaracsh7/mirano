@@ -8,31 +8,35 @@ import { Order } from './modules/Order/Order';
 import { Subscribe } from './modules/Subscribe/Subscribe';
 import { useEffect, useRef } from 'react';
 import { registerCart, fetchCart } from './redux/cartSlice';
+import { AppDispatch } from './redux/store';
+import { Cart } from './modules/Cart/Cart';
 
 export function App() {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const initialCart = async () => {
-      await dispatch(registerCart());
-      await dispatch(fetchCart());
+      dispatch(registerCart());
+      dispatch(fetchCart());
     };
     initialCart();
   }, [dispatch]);
   
   const goodsRef = useRef(null);
+  const cartRef = useRef(null);
 
   return (
     <>
 
-      <Header goodsRef={goodsRef} />
-      <main>
+      <Header goodsRef={goodsRef} cartRef={cartRef}/>
+      <main className='main'>
         <Hero />
         <Filter />
-        
+        <div ref={cartRef}><Cart /></div>
         <div ref={goodsRef}>
           <Goods />
         </div>
+
         <Subscribe />
       </main>
 

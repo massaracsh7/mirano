@@ -209,10 +209,8 @@
     background-color: $light-orange;
     color: $white;
     border: 1px solid transparent;
+    @extend %btn-placeholder;
 
-    &:hover {
-      background-color: $orange;
-    }
     &:focus-visible {
       outline: none;
       border-color: $light-orange;

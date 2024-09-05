@@ -22,3 +22,17 @@ $second-family: "Playfair Display", sans-serif;
     #{$max-size}px
   );
 }
+
+%btn-placeholder {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: lighten(#607900, 10%);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background-color: darken(#d17d2f, 10%);
+  }
+}

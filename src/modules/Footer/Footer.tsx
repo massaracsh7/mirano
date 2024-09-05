@@ -7,10 +7,10 @@ export const Footer: React.FC = () => (
       <img className={style.footer__logo} src="img/logo.svg" alt="Логотип Mirano Flower Boutique" />
 
       <address className={style.footer__address}>
-        <a className={style.footer__mail} href="mailto:Mirano@gmail.com">Mirano@gmail.com</a>
+        <a className={style.footer__mail} href="mailto:mirano@gmail.com">Mirano@gmail.com</a>
 
-        <ul className={style.footer__socialList}>
-          <li className={style.footer__socialItem}>
+        <ul className={style.footer__sociallist}>
+          <li className={style.footer__socialitem}>
             <a className={style.footer__link} href="#" aria-label="канал в телеграм">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -20,7 +20,7 @@ export const Footer: React.FC = () => (
             </a>
           </li>
 
-          <li className={style.footer__socialItem}>
+          <li className={style.footer__socialitem}>
             <a className={style.footer__link} href="#" aria-label="канал в youtube">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -30,7 +30,7 @@ export const Footer: React.FC = () => (
             </a>
           </li>
 
-          <li className={style.footer__socialItem}>
+          <li className={style.footer__socialitem}>
             <a className={style.footer__link} href="#" aria-label="группа в вк">
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -43,14 +43,10 @@ export const Footer: React.FC = () => (
       </address>
 
       <div className={style.footer__developers}>
-        <p className={style.footer__developersTitle}>Проект сделан в учебных целях</p>
 
-        <ul className={style.footer__developersList}>
-          <li className={style.footer__developersItem}>
+        <ul className={style.footer__developerslist}>
+          <li className={style.footer__developersitem}>
             Designer: <a className={style.footer__link} href="Anastasia_Ilina">Anastasia Ilina</a>
-          </li>
-          <li className={style.footer__developersItem}>
-            Developer: <a className={style.footer__link} href="maksim_leskin">Makism Leskin</a>
           </li>
         </ul>
       </div>

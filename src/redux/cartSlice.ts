@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { API_URL } from "../const";
 
 interface CartItem {
-  productId: number;
+  id: string;
   quantity: number;
   price: number;
   photoUrl: string;
@@ -15,7 +15,7 @@ interface CartResponse {
 }
 
 interface AddItemPayload {
-  productId: number;
+  productId: string;
   quantity: number;
 }
 
@@ -74,7 +74,7 @@ export const addItemToCart = createAsyncThunk<CartItem[], AddItemPayload>(
     if (!response.ok) {
       throw new Error('Error adding item to cart');
     }
-    return (await response.json()) as CartItem[];
+    return await response.json();
   }
 );
 
@@ -126,10 +126,8 @@ const cartSlice = createSlice({
   }
 });
 
-// Экспорт действий и редьюсера
 export const { toggleCart } = cartSlice.actions;
 
-// Селектор для получения общей стоимости корзины
 export const selectTotalPrice = (state: { cart: CartState }) =>
   state.cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
 

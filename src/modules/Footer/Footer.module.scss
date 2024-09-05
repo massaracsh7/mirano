@@ -29,20 +29,44 @@
   &__mail {
     display: inline-block;
     margin-bottom: 16px;
+    border-bottom: 1px solid transparent;
+    transition: transform 0.2s ease, border-bottom 0.2s ease;
+    
+      &:hover {
+        transform: scale(1.05);
+        border-bottom: 1px solid $green;
+      }
+    
+      &:active {
+        transform: scale(0.95);
+        border-bottom: 1px solid $orange;
+      }
   }
 
-  &__socialList {
+  &__sociallist {
     display: flex;
     align-content: center;
     justify-content: center;
     gap: 12px;
   }
 
-  &__developersTitle {
+  &__socialitem {
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__developerstitle {
     margin-bottom: 3px;
   }
 
-  &__developersItem {
+  &__developersitem {
     margin-bottom: 3px;
 
     &:last-child {
