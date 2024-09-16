@@ -4,7 +4,26 @@
 
 ## About The Project
 
+![Screen ](public/screen.png)
+
 "FLOWER BOUTIQUE MIRANO" is an online store where users can purchase exclusive, handcrafted bouquets, personalized greeting cards, and unique toys. The platform offers a seamless shopping experience with a curated selection of artistic floral arrangements and thoughtful gifts for any occasion.
+
+***************************
+
+## Deploy ##
+
+* [https://mirano-omega.vercel.app](https://mirano-omega.vercel.app)
+
+***************************
+
+## Product Loading
+
+Products may take some time to load as data is being fetched from an external API. Please wait a few seconds while the information is being updated.
+
+## Data Source
+Products are loaded from an external API (https://mirano-api-gjxb.onrender.com).
+
+***************************
 
 ## Built With
 
