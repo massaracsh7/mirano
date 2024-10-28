@@ -38,11 +38,11 @@ const wakeUpAPI = async () => {
   while (attempt < 10) {
     try {
       await fetch('https://mirano-api-gjxb.onrender.com/api/products');
-      console.log('API is awake');
+      console.log('Ok, API is awake');
       return; 
     } catch (error) {
       attempt++;
-      console.error(`API is not awake`);
+      console.error(`Loading..., API is not awake`);
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
