@@ -33,9 +33,20 @@ const initialState: GoodsState = {
   category: '',
 };
 
+const wakeUpAPI = async () => {
+  try {
+    await fetch('https://mirano-api-gjxb.onrender.com/health');
+    console.log('API is awake');
+  } catch (error) {
+    console.error('Failed to wake up API:', error);
+  }
+};
+
+
 export const fetchGoods = createAsyncThunk<Product[], Record<string, string>>(
   'goods/fetchGoods',
   async (params) => {
+    await wakeUpAPI();
     const queryString = new URLSearchParams(params).toString();
     const response = await fetch(
       `${API_URL}/api/products${queryString ? `?${queryString}` : ""}`, {
