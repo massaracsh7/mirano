@@ -34,12 +34,19 @@ const initialState: GoodsState = {
 };
 
 const wakeUpAPI = async () => {
-  try {
-    await fetch('https://mirano-api-gjxb.onrender.com/health');
-    console.log('API is awake');
-  } catch (error) {
-    console.error('Failed to wake up API:', error);
+  let attempt = 0;
+  while (attempt < 10) {
+    try {
+      await fetch('https://mirano-api-gjxb.onrender.com/api/products');
+      console.log('API is awake');
+      return; 
+    } catch (error) {
+      attempt++;
+      console.error(`API is not awake`);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
   }
+  window.location.reload();
 };
 
 
